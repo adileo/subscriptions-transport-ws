@@ -188,6 +188,11 @@ var SubscriptionServer = (function () {
                             var document = typeof baseParams.query !== 'string' ? baseParams.query : graphql_1.parse(baseParams.query);
                             var executionPromise;
                             var validationErrors = graphql_1.validate(params.schema, document, _this.specifiedRules);
+                            console.log('AAA');
+                            if (!is_subscriptions_1.isASubscriptionOperation(document, params.operationName)) {
+                                console.log('BBB');
+                                executionPromise = Promise.resolve({ errors: [] });
+                            }
                             if (validationErrors.length > 0) {
                                 executionPromise = Promise.resolve({ errors: validationErrors });
                             }
