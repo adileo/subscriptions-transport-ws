@@ -348,7 +348,10 @@ export class SubscriptionServer {
               const document = typeof baseParams.query !== 'string' ? baseParams.query : parse(baseParams.query);
               let executionPromise: Promise<AsyncIterator<ExecutionResult> | ExecutionResult>;
               const validationErrors = validate(params.schema, document, this.specifiedRules);
-
+              if (!isASubscriptionOperation(document, params.operationName)){
+                console.log('AAA')
+                executionPromise = Promise.resolve({ });
+              }
               if ( validationErrors.length > 0 ) {
                 executionPromise = Promise.resolve({ errors: validationErrors });
               } else {
